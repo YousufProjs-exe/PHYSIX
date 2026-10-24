@@ -21,3 +21,23 @@ canvas{
     gap: 9%;
     height: 90%;
 }
+
+#input {
+    background: white;
+    border-radius: 5px;
+    padding: 15px;
+    margin-right: 20%;
+    height: 90%;
+    width: 100%;
+    display: flex;
+    /* flex-direction: row; */
+    flex-direction: column;
+    gap: 10%;
+}
+
+#output {
+    background: white;
+    border-radius: 5px;
+    padding: 15px;
+    width: 200px;
+}
