@@ -8,20 +8,24 @@
 </head>
 <body>
     <canvas id="canvas" width="800px" height="600px"></canvas>
-    <div class="container">
+    <div id="container">
+        <!-- lol it was class container and i was doin work on class container assuming its id -->
         <h2>PHYSIX</h2>
         <p>Physics and Graphs Simpulation!</p>
         <div class="input"><input type="number" placeholder="Speed of the Object" id="speed" type="text">
             <input type="number" placeholder="Angle of the Object" id="angle" type="text">
             <input type="number" placeholder="Height" id="height" type="text">
             <button id="start" onclick="start()">Start</button>
-            <button id="reset" onclick="">Reset</button></div>
+            <button id="reset" onclick="reset()">Reset</button></div>
     </div>
     <script>
         function start(){
             document.write("Start Working");
         }
+        function reset(){
+            document.write("did u pressed reset ?")
+        }
     </script>
-    <script src="physix.js"></script>
+<script src="physix.js"></script>
 </body>
 </html>
