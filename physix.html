@@ -25,10 +25,68 @@
                 <h2 id="maxY">Max Height(Y): 0m</h2>
             </div>
         </div>
+
     <script>
-        function start(){
-            document.write("Start Working");
-        }
+function start(){
+    time = 0;
+    X = 0;
+    draw() 
+    clearInterval(timer);
+    speed =Number(document.getElementById("iS").value);
+    angle = Number(document.getElementById("angle").value);
+    hight = Number(document.getElementById("H").value);
+    
+     angleRad = angle * Math.PI / 180;
+     Vx = speed * Math.cos(angleRad);
+     Ix = speed * Math.cos(angleRad);
+     Vy = speed * Math.sin(angleRad);
+     Iy = speed * Math.sin(angleRad);
+     dt = 0.16
+    Y = hight;
+
+    timer = setInterval(() => {
+        time = time  + 160/1000;
+        document.getElementById("time").innerHTML = "Time : " + Math.round(time / 0.25) * 0.25 + "s";
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        draw();
+            Vx = Vx + acceleration * dt;
+            Vy = Vy + -9.81 * dt
+            X = X + Vx * dt;
+            Y = Y + Vy * dt
+
+            trajectory.push({x: X , y: Y});
+
+             maxX = Math.max(maxX, X)
+             maxY = Math.max(maxY, Y)
+
+               scale = Math.min(canvas.width / (maxX + 10),canvas.height / (maxY + 10));
+              for (let i = 0; i < trajectory.length; i++) {
+                ctx.beginPath();
+                ctx.arc(
+                  trajectory[i].x * scale,
+                  600 - trajectory[i].y * scale,
+                  3,
+                  0,
+                  Math.PI * 2
+                 );         
+                ctx.fill();
+             }
+
+            if (Y >= 0) {
+
+            document.getElementById("xx").innerHTML = "X : " + Math.round(X) + "m";
+            document.getElementById("yy").innerHTML = "Y : " + Math.round(Y) + "m";
+
+            }
+            if (Y === 0 || Y < 0) {
+
+                clearInterval(timer);
+                document.getElementById("yy").innerHTML = "Y : 0m";
+            document.getElementById("maxY").innerHTML = "Max Y : " + Math.round(maxY) + "m";
+
+            }
+    },160);
+}
         function reset(){
             document.write("did u pressed reset ?")
         }
