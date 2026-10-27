@@ -36,13 +36,13 @@ function start(){
     angle = Number(document.getElementById("angle").value);
     hight = Number(document.getElementById("height").value);
     
-     angleRad = angle * Math.PI / 180;
-     Vx = speed * Math.cos(angleRad);
-     Ix = speed * Math.cos(angleRad);
-     Vy = speed * Math.sin(angleRad);
-     Iy = speed * Math.sin(angleRad);
-     dt = 0.16
-    Y = hight;
+    angleRad = angle * Math.PI / 180;
+    Vx = speed * Math.cos(angleRad);
+    Ix = speed * Math.cos(angleRad);
+    Vy = speed * Math.sin(angleRad);
+      Iy = speed * Math.sin(angleRad);
+      dt = 0.16
+     Y = hight;
 
     timer = setInterval(() => {
         time = time  + 160/1000;
@@ -63,11 +63,11 @@ function start(){
               for (let i = 0; i < trajectory.length; i++) {
                 ctx.beginPath();
                 ctx.arc(
-                  trajectory[i].x * scale,
-                  600 - trajectory[i].y * scale,
-                  3,
-                  0,
-                  Math.PI * 2
+                    trajectory[i].x * scale,
+                    600 - trajectory[i].y * scale,
+                    3,
+                    0,
+                    Math.PI * 2
                  );         
                 ctx.fill();
              }

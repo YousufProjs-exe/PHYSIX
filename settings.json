@@ -1,0 +1,21 @@
+{
+    "editor.quickSuggestions": {
+        "other": true,
+        "comments": false,
+        "strings": false
+    },
+    "editor.suggestOnTriggerCharacters": true,
+    "editor.tabCompletion": "on",
+    "emmet.includeLanguages": {
+        "javascript": "html"
+    },
+    "files.associations": {
+        "*.html": "html",
+        "*.css": "css",
+        "*.js": "javascript"
+    },
+    "html.validate.scripts": true,
+    "html.validate.styles": true,
+    "css.validate": true,
+    "javascript.validate.enable": true
+}
