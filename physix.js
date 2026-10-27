@@ -1,152 +1,180 @@
-alert("Desktop only, and dont set the angle higher than 90 degrees")
-let canvas
-let ctx
-let X;
-let Y;
-let time
-let timer
+
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+let timer = null;
+let speed = 0;
 let angle = 0;
-let angleRad
-let speed = 0 ;
-let height;
-let maxY = 0 
-let maxX = 0  
-let dt
-let Gy
-let vy
-let vx
-let i = 0 
-let Ix;
-let Iy
-let Mx
-let My
-let scale = 0 
-let scaleX 
-let scaleY
-let sin90 
-let trajectories = []
+let height = 0;
+let X = 0;
+let Y = 0;
+let Vx = 0;
+let Vy = 0;
+let time = 0;
+let dt = 0.16;
+let scale = 1;
+let maxX = 0;
+let maxY = 0;
 let trajectory = [];
-let acceleration 
+const gravity = 9.81;
+// lol 
 
-
-// Canva grid :+: 
-function draw(){
-canvas = document.getElementById('myCanvas');
-
-     ctx = canvas.getContext("2d");
-
-     ctx.beginPath();
-     ctx.moveTo(100 , 1)
-     ctx.lineTo(100,600 );
+function drawGrid() {
+     ctx.clearRect(0, 0, canvas.width, canvas.height);
      ctx.strokeStyle = "gray";
-     ctx.stroke();
-     ctx.font = "15px Arial";
      ctx.fillStyle = "gray";
-     ctx.fillText(Math.round(100 / scale)+"m", 110, 590);
+     ctx.lineWidth = 1;
+     ctx.font = "12px Arial";
 
-     ctx.beginPath();
-     ctx.moveTo(200 , 1)
-     ctx.lineTo(200,600 );
-     ctx.strokeStyle = "gray";
-     ctx.stroke();
-     ctx.font = "15px Arial";
-     ctx.fillStyle = "gray";
-     ctx.fillText(Math.round(200 / scale)+"m", 210, 590);
+     for (let x = 100; x < canvas.width; x += 100) {
+          ctx.beginPath();
+          ctx.moveTo(x, 0);
+          ctx.lineTo(x, canvas.height);
+          ctx.stroke();
+          ctx.fillText(`${Math.round(x / scale)}m`, x + 5, canvas.height - 10);
+     }
 
-     ctx.beginPath();
-     ctx.moveTo(300 ,1);
-     ctx.lineTo(300 , 600);
-     ctx.strokeStyle = "gray";
-     ctx.stroke();
-     ctx.font = "15px Arial";
-     ctx.fillStyle = "gray";
-     ctx.fillText(Math.round(300 / scale)+"m", 310, 590);  
+     for (let y = 100; y < canvas.height; y += 100) {
+          ctx.beginPath();
+          ctx.moveTo(0, y);
+          ctx.lineTo(canvas.width, y);
+          ctx.stroke();
 
-     ctx.beginPath();
-     ctx.moveTo(400 ,1);
-     ctx.lineTo(400 , 600);
-     ctx.strokeStyle = " black";
-     ctx.stroke();
-     ctx.font = "15px Arial";
-     ctx.fillStyle = "gray";
-     ctx.fillText(Math.round(400 / scale)+"m", 410, 590);
-     
-     ctx.beginPath();
-     ctx.moveTo(500 ,1);
-     ctx.lineTo(500 , 600);
-     ctx.strokeStyle = "gray";
-     ctx.stroke();
-     ctx.font = "15px Arial";
-     ctx.fillStyle = "gray";
-     ctx.fillText(Math.round(500 / scale)+"m", 510, 590);   
+          ctx.fillText(
+               `${Math.round((canvas.height - y) / scale)}m`,
+               canvas.width - 45,
+               y - 5
+          );
+     }
+}
 
-     ctx.beginPath();
-     ctx.moveTo(600 ,1);
-     ctx.lineTo(600 , 600);
-     ctx.strokeStyle = "gray";
-     ctx.stroke();
-     ctx.font = "15px Arial";
-     ctx.fillStyle = "gray";
-     ctx.fillText(Math.round(600 / scale)+"m", 610, 590);
+function draw() {
+    drawGrid();
 
-     ctx.beginPath();
-     ctx.moveTo(700 ,1);
-     ctx.lineTo(700 , 600);
-     ctx.strokeStyle = "gray";
-     ctx.stroke();
-     ctx.font = "15px Arial";
-     ctx.fillStyle = "gray";
-     ctx.fillText(Math.round(700 / scale)+"m", 710, 590);
+    ctx.fillStyle = "black";
 
-     ctx.beginPath();
-     ctx.moveTo(1 ,200);
-     ctx.lineTo(800 , 200);
-     ctx.strokeStyle = "gray";
-     ctx.stroke();
-     ctx.font = "15px Arial";
-     ctx.fillStyle = "gray";
-     ctx.fillText(Math.round(400 / scale)+"m", 760, 190);
+    for (const point of trajectory) {
+        ctx.beginPath();
+        ctx.arc(
+               point.x * scale,
+               canvas.height - point.y * scale,
+               3,
+               0,
+               Math.PI * 2
+        );
+        ctx.fill();
+    }
+}
 
-     ctx.beginPath();
-     ctx.moveTo(800 ,100);
-     ctx.lineTo(1 , 100);
-     ctx.strokeStyle = "gray";
-     ctx.stroke();
-     ctx.font = "15px Arial";
-     ctx.fillStyle = "gray";
-     ctx.fillText(Math.round(500 / scale)+"m", 760, 90);
+function start() {
+    clearInterval(timer);
+    timer = null;
 
-     ctx.beginPath();
-     ctx.moveTo(1 ,400);
-     ctx.lineTo(800 , 400);
-     ctx.strokeStyle = "gray";
-     ctx.stroke()
-     ctx.beginPath();
-     ctx.moveTo(800 ,300);
-     ctx.lineTo(1 , 300);
-     ctx.strokeStyle = "black";
-     ctx.stroke();
-     ctx.font = "15px Arial";
-     ctx.fillStyle = "gray";
-     ctx.fillText(Math.round(300 / scale)+"m", 760, 290);
-     
-     ctx.beginPath();
-     ctx.moveTo(800 ,200);
-     ctx.lineTo(1 , 200);
-     ctx.strokeStyle = "gray";
-     ctx.stroke();
-     ctx.font = "15px Arial";
-     ctx.fillStyle = "gray";
-     ctx.fillText(Math.round(200 / scale)+"m", 760, 396);
+    speed = Number(document.getElementById("speed").value);
+    angle = Number(document.getElementById("angle").value);
+    height = Number(document.getElementById("height").value);
 
-     ctx.beginPath();
-     ctx.moveTo(800 ,500);
-     ctx.lineTo(1 , 500);
-     ctx.strokeStyle = "gray";
-     ctx.stroke();
-     ctx.font = "15px Arial";
-     ctx.fillStyle = "gray";
-     ctx.fillText(Math.round(100 / scale)+"m", 760, 490);
-     
-};
-draw()
+    if (
+          document.getElementById("speed").value === "" ||
+          document.getElementById("angle").value === "" ||
+          document.getElementById("height").value === "" ||
+          !Number.isFinite(speed) ||
+          !Number.isFinite(angle) ||
+          !Number.isFinite(height) ||
+          speed < 0 ||
+          angle < 0 ||
+          angle > 90 ||
+          height < 0
+    ) 
+    
+    {
+        alert("Enter a valid speed, angle (0–90°), and height.");
+        return;
+    }
+
+    const angleRad = angle * Math.PI / 180;
+    Vx = speed * Math.cos(angleRad);
+    Vy = speed * Math.sin(angleRad);
+    X = 0;
+    Y = height;
+    time = 0;
+    maxX = 0;
+    maxY = height;
+    scale = 1;
+    trajectory = [{ x: X, y: Y }];
+
+    document.getElementById("xx").textContent = "X : 0m";
+    document.getElementById("yy").textContent = `Y : ${Math.round(Y)}m`;
+    document.getElementById("time").textContent = "Time : 0s";
+    document.getElementById("maxY").textContent = `Max Y : ${Math.round(maxY)}m`;
+
+    if (height === 0 && speed === 0) {
+        draw();
+        return;
+    }
+
+    draw();
+
+    timer = setInterval(() => {
+        time += dt;
+
+        X += Vx * dt;
+        Vy -= gravity * dt;
+        Y = height + speed * Math.sin(angleRad) * time - 0.5 * gravity * time * time;
+
+        maxX = Math.max(maxX, X);
+        maxY = Math.max(maxY, Y);
+
+        const safeMaxX = Math.max(maxX, 10);
+        const safeMaxY = Math.max(maxY, 10);
+
+        scale = Math.min(
+               canvas.width / (safeMaxX + 10),
+               canvas.height / (safeMaxY + 10));
+
+        if (Y <= 0) {
+            Y = 0;
+        }
+
+        trajectory.push({ x: X, y: Y });
+
+        draw();
+
+        document.getElementById("time").textContent = `Time : ${Math.round(time / 0.25) * 0.25}s`;
+        document.getElementById("xx").textContent = `X : ${Math.round(X)}m`;
+        document.getElementById("yy").textContent = `Y : ${Math.round(Y)}m`;
+        document.getElementById("maxY").textContent = `Max Y : ${Math.round(maxY)}m`;
+
+          if (Y <= 0) {
+                 clearInterval(timer);
+                 timer = null;
+          }
+    }, 160);
+}
+
+function reset() {
+    clearInterval(timer);
+    timer = null;
+    speed = 0;
+    angle = 0;
+    height = 0;
+    X = 0;
+    Y = 0;
+    Vx = 0;
+    Vy = 0;
+    time = 0;
+    scale = 1;
+    maxX = 0;
+    maxY = 0;
+    trajectory = [];
+
+    document.getElementById("speed").value = 0;
+    document.getElementById("angle").value = 0;
+    document.getElementById("height").value = 0;
+    document.getElementById("xx").textContent = "X : 0m";
+    document.getElementById("yy").textContent = "Y : 0m";
+    document.getElementById("time").textContent = "Time : 0s";
+    document.getElementById("maxY").textContent = "Max Y : 0m";
+
+    draw();
+}
+draw();
