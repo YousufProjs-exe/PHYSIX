@@ -8,3 +8,14 @@ body{
     grid-template-rows: 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5%;
 
 }
+
+#con{
+    grid-column: 1/21;
+    grid-row: 5/17;
+    columns: 1.23;
+    color: aqua;
+    background-color: aliceblue;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
