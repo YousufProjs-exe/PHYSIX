@@ -2,7 +2,7 @@
 ofc Physics on graphysss test em ! 
 ![PhYSIX](./ss/init.png) 
 
-# PHYSIX  ~ Try ![PHSYIX](https://yousufprojs-exe.github.io/PHYSIX/)
+# PHYSIX  ~ Try [PHSYIX](https://yousufprojs-exe.github.io/PHYSIX/)
 PHYSIX is a simple physics simulator that brings projectile motion to life by plotting an object's trajectory on a live graph. Enter the initial speed, launch angle, and starting height to watch how the object moves, track its X and Y positions, measure elapsed time, and see its maximum height — all while visualizing the physics behind its motion 
 
 ![PHSYIX](/./ss/res.png)
