@@ -5,12 +5,18 @@ body{
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    margin: 0;
 }
 
 canvas{
     grid-area: 2/2;
     border: 2mm solid black;
     height: 90%;
+    border-spacing: border-box;
+}
+
+::placeholder{
+    color: gainsboro;
 }
 
 #container{
@@ -20,6 +26,7 @@ canvas{
     /* gap: 15%; */
     gap: 9%;
     height: 90%;
+    box-sizing: border-box;
 }
 
 #input {
@@ -27,7 +34,7 @@ canvas{
     border-radius: 5px;
     padding: 15px;
     margin-right: 20%;
-    height: 90%;
+    box-sizing: border-box;
     width: 100%;
     display: flex;
     /* flex-direction: row; */
@@ -38,6 +45,7 @@ canvas{
 #output {
     background: white;
     border-radius: 5px;
+    overflow-wrap: anywhere;
     padding: 15px;
     width: 200px;
 }
