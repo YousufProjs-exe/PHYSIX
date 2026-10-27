@@ -12,10 +12,16 @@ body{
 #con{
     grid-column: 1/21;
     grid-row: 5/17;
-    columns: 1.23;
-    color: aqua;
-    background-color: aliceblue;
     display: flex;
     align-items: center;
     justify-content: space-around;
+}
+
+#h1 {
+    text-align: center;
+    grid-column: 2/20;
+    grid-row: 2/5;
+    font-family: "Open Sans", sans-serif;
+    font-size: 50px;
+    color: rgb(371, 190, 196);
 }
